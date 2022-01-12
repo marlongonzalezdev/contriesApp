@@ -1,0 +1,27 @@
+<h2>By Country</h2>
+<hr />
+
+<div class="row">
+  <div class="col">
+    <app-country-input (onEnter)="search($event)" (onDebounce)="getSuggestions($event)" placeholder="Search by country..."></app-country-input>
+  </div>
+</div>
+
+<ul class="list-group" *ngIf="showSuggestions">
+  <li class="list-group-item list-group-item-action" *ngFor="let suggestion of suggestions">
+    <a class="nav-link" [routerLink]="['/country', suggestion.cca2]">{{suggestion.name.official}}</a>
+  </li>
+  <li class="list-group-item list-group-item-action" *ngIf="criteria">
+    <a class="nav-link" (click)="searchBySuggestion(criteria)">Search by "{{criteria}}"</a>
+  </li>
+</ul>
+
+<hr />
+<div class="alert alert-danger" *ngIf="hasErrors">Not found {{criteria}}</div>
+
+  <div class="row" *ngIf="!hasErrors">
+    <div class="col">
+      <app-country-table [countries] = "countries"></app-country-table>
+    </div>
+  </div>
+
